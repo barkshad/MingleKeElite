@@ -49,8 +49,8 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({ profile, onSwipe }) => {
       onDragEnd={handleDragEnd}
       className="absolute inset-x-0 inset-y-8 md:inset-y-12 max-w-sm md:max-w-md mx-auto cursor-grab active:cursor-grabbing w-full"
     >
-      <div className="h-full w-full rounded-3xl overflow-hidden bg-surface border border-border shadow-2xl relative group">
-        <div className="relative h-full w-full overflow-hidden bg-[#000]">
+      <div className="h-full w-full rounded-[24px] overflow-hidden bg-surface border-none shadow-[0_8px_30px_rgb(0,0,0,0.6)] relative group">
+        <div className="relative h-full w-full overflow-hidden bg-[#0A0A0A]">
           <AnimatePresence mode="wait">
             <motion.img 
               key={photoIndex}
@@ -85,14 +85,14 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({ profile, onSwipe }) => {
           {/* Swipe Indicators */}
           <motion.div 
             style={{ opacity: heartOpacity }}
-            className="absolute left-6 top-16 z-30 rounded-xl border-2 border-primary bg-primary/10 px-6 py-2 text-3xl font-bold uppercase tracking-wider text-primary rotate-[-10deg] backdrop-blur-sm"
+            className="absolute left-6 top-16 z-30 rounded-xl border-2 border-primary bg-primary/20 px-6 py-2 text-3xl font-bold uppercase tracking-wider text-primary transform -rotate-12 backdrop-blur-sm"
           >
             LIKE
           </motion.div>
           
           <motion.div 
             style={{ opacity: xOpacity }}
-            className="absolute right-6 top-16 z-30 rounded-xl border-2 border-white/40 bg-white/10 px-6 py-2 text-3xl font-bold uppercase tracking-wider text-white rotate-[10deg] backdrop-blur-sm"
+            className="absolute right-6 top-16 z-30 rounded-xl border-2 border-white/60 bg-white/20 px-6 py-2 text-3xl font-bold uppercase tracking-wider text-white transform rotate-12 backdrop-blur-sm"
           >
             NOPE
           </motion.div>
@@ -122,7 +122,7 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({ profile, onSwipe }) => {
               {(profile.interests || ['Music', 'Art', 'Tech']).map((interest: string, i: number) => (
                 <span 
                   key={interest}
-                  className="px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-lg text-xs font-medium text-white/90 border border-white/5"
+                  className="px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-lg text-xs font-medium text-white shadow-sm border border-white/10"
                 >
                   {interest}
                 </span>
@@ -132,13 +132,13 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({ profile, onSwipe }) => {
             <div className="mt-6 flex items-center justify-center gap-6">
               <button 
                 onClick={() => onSwipe('left')}
-                className="w-14 h-14 rounded-full bg-surface border border-border flex items-center justify-center transition-all hover:bg-white/5 text-white/50 hover:text-white active:scale-95 z-30"
+                className="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center transition-all hover:bg-black/80 text-white active:scale-95 z-30"
               >
                 <X size={24} strokeWidth={2.5} />
               </button>
               <button 
                 onClick={() => onSwipe('right')}
-                className="w-16 h-16 rounded-full bg-primary flex items-center justify-center transition-all text-white hover:bg-primary-hover active:scale-95 z-30 shadow-lg"
+                className="w-16 h-16 rounded-full bg-primary flex items-center justify-center transition-all text-white hover:bg-primary-hover active:scale-95 z-30 shadow-[0_0_20px_rgba(124,58,237,0.3)]"
               >
                 <Heart size={28} fill="currentColor" strokeWidth={0} />
               </button>

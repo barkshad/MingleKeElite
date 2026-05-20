@@ -129,7 +129,7 @@ export function ChatPage() {
       {/* Messages Area */}
       <main className="relative flex-1 overflow-y-auto px-4 py-6 space-y-4 scrollbar-hide">
         <div className="flex flex-col items-center justify-center py-6">
-           <div className="p-3 rounded-full bg-white/5 mb-3 text-text-muted">
+           <div className="p-3 rounded-full bg-surface-hover mb-3 text-text-muted">
              <Lock size={16} />
            </div>
            <p className="text-xs text-text-muted">End-to-end encrypted</p>
@@ -139,28 +139,25 @@ export function ChatPage() {
           {messages.map((message, index) => {
             const isMe = message.senderId === user?.uid;
             return (
-              <motion.div
+              <div
                 key={message.id || index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
                 className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
               >
                 <div className={`peer relative max-w-[75%]`}>
                   <div className={`
-                    px-4 py-2.5 rounded-[18px] text-[15px] leading-relaxed
+                    px-4 py-2 text-[15px] leading-relaxed
                     ${isMe 
-                      ? 'bg-surface-hover text-white rounded-tr-sm' 
-                      : 'bg-white/10 text-white rounded-tl-sm'
+                      ? 'bg-primary text-white rounded-2xl rounded-br-sm' 
+                      : 'bg-surface-hover text-white rounded-2xl rounded-bl-sm border border-border'
                     }
                   `}>
                     {message.text}
                   </div>
-                  {/* Timestamp fade-in on hover of parent bubble */}
-                  <div className={`mt-1 text-[10px] text-text-muted ${isMe ? 'text-right' : 'text-left'} opacity-0 peer-hover:opacity-100 transition-opacity`}>
+                  <div className={`mt-1 text-[10px] text-text-muted ${isMe ? 'text-right' : 'text-left'}`}>
                       {message.createdAt ? (message.createdAt as any).toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Sending...'}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </AnimatePresence>
@@ -168,10 +165,10 @@ export function ChatPage() {
       </main>
 
       {/* Input Area */}
-      <footer className="relative z-50 p-4 bg-background">
-        <div className="relative flex items-end gap-2 bg-surface rounded-3xl border border-border px-2 py-2">
-          <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-text-muted hover:text-white flex-shrink-0">
-            <Smile size={24} />
+      <footer className="relative z-50 p-4 bg-background border-t border-border">
+        <div className="relative flex items-end gap-2 bg-surface rounded-full border border-border px-3 py-1">
+          <button className="p-2 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-white flex-shrink-0">
+            <Smile size={20} />
           </button>
           <form onSubmit={handleSend} className="flex-1 min-h-[44px] flex items-center">
             <input 
@@ -185,13 +182,13 @@ export function ChatPage() {
           {text.trim() ? (
             <button 
               onClick={handleSend}
-              className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary-hover transition-colors mb-0.5"
+              className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary-hover transition-colors mb-1.5"
             >
-              <Send size={18} className="ml-1" />
+              <Send size={14} className="ml-0.5" />
             </button>
           ) : (
-             <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-text-muted hover:text-white flex-shrink-0 mb-0.5">
-                <Mic size={24} />
+             <button className="p-2 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-white flex-shrink-0 mb-1">
+                <Mic size={20} />
               </button>
           )}
         </div>

@@ -106,7 +106,7 @@ export function DiscoverPage() {
         {/* Main Swipe Area */}
         <div className="col-span-12 lg:col-span-8 relative aspect-[4/5] lg:aspect-auto min-h-[600px] lg:h-[calc(100vh-200px)]">
           {loading ? (
-            <div className="flex h-full w-full items-center justify-center rounded-[32px] border border-white/10 bg-white/5">
+            <div className="flex h-full w-full items-center justify-center rounded-[24px] border border-border bg-surface">
               <div className="h-16 w-16 animate-spin rounded-full border-4 border-primary border-t-transparent" />
             </div>
           ) : (
@@ -122,17 +122,17 @@ export function DiscoverPage() {
               </AnimatePresence>
               
               {currentIndex >= profiles.length && !loading && (
-                <div className="flex h-full w-full flex-col items-center justify-center text-center p-12 glass-morphism rounded-[32px] border-white/10 bg-white/5">
-                  <div className="w-24 h-24 rounded-full bg-white/5 flex items-center justify-center mb-8 border border-white/10 shadow-glass">
-                    <Zap size={48} className="text-primary" />
+                <div className="flex h-full w-full flex-col items-center justify-center text-center p-12 bg-surface rounded-[24px] border border-border">
+                  <div className="w-16 h-16 rounded-full bg-surface-hover border border-border flex items-center justify-center mb-6">
+                    <Zap size={32} className="text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold tracking-tight mb-2">Discovery Paused</h2>
-                  <p className="text-text-secondary text-sm font-medium max-w-sm">
+                  <h2 className="text-xl font-bold tracking-tight mb-2">Discovery Paused</h2>
+                  <p className="text-text-secondary text-sm font-medium max-w-sm mb-6">
                     You've seen all the elite energy in your region. Check back soon or upgrade your range.
                   </p>
                   <button 
                     onClick={() => setCurrentIndex(0)}
-                    className="btn-primary mt-8 px-8 py-3.5 text-sm"
+                    className="btn-primary px-6 py-2.5 text-sm"
                   >
                     Restart Discovery
                   </button>
