@@ -14,8 +14,11 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    // In production, server.cjs is in dist/, so __dirname is dist/
+    const distPath = __dirname;
     app.use(express.static(distPath));
+    
+    // SPA Fallback
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
