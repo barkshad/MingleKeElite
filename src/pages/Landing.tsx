@@ -12,7 +12,7 @@ export function LandingPage() {
            <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
               <Sparkles size={12} className="text-white" />
            </div>
-           Chatvibe
+           MingleKe
         </div>
       </nav>
 
@@ -53,7 +53,7 @@ export function LandingPage() {
         >
           <Link to="/auth" className="w-full sm:w-auto text-center block">
             <button className="btn-primary w-full sm:w-auto px-8 py-4 text-base">
-              Join Chatvibe
+              Join MingleKe
               <ArrowRight size={18} />
             </button>
           </Link>

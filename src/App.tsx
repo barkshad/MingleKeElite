@@ -17,13 +17,13 @@ import { OnboardingPage } from './pages/Onboarding';
 function AppRoutes() {
   const { user, profile, loading } = useAuth();
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#05000a]">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
+    if (loading) {
+      return (
+        <div className="flex min-h-screen items-center justify-center bg-background">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        </div>
+      );
+    }
 
   return (
     <div className="relative min-h-screen">
@@ -56,14 +56,6 @@ function AppRoutes() {
                   !profile?.onboardingCompleted ? <Navigate to="/onboarding" /> : (
                     <div className="pb-24">
                       <DiscoverPage />
-                      <footer className="fixed bottom-24 left-6 right-6 h-12 bg-gradient-to-r from-primary/10 to-secondary/10 border border-white/10 rounded-2xl flex items-center px-6 overflow-hidden z-20 pointer-events-none backdrop-blur-md">
-                        <div className="flex items-center gap-3 whitespace-nowrap animate-pulse">
-                          <div className="w-2 h-2 rounded-full bg-primary shadow-neon" />
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Premium Activation Live view • Nairobi Region Hot</span>
-                          <span className="mx-4 text-white/20">•</span>
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-secondary">Elite User@291 matched recently</span>
-                        </div>
-                      </footer>
                       <BottomNav />
                     </div>
                   )

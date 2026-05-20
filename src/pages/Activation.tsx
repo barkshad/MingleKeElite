@@ -34,13 +34,13 @@ export function ActivationPage() {
           <Crown size={48} className="text-white" />
         </div>
         
-        <h1 className="font-display text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none mb-6">
-          ACTIVATE <br />
-          <span className="text-gradient">ELITE ACCESS</span>
+        <h1 className="text-4xl text-center md:text-5xl font-bold tracking-tight mb-4">
+          Activate <br />
+          <span className="text-primary">Elite Access</span>
         </h1>
         
-        <p className="text-white/40 text-lg md:text-xl font-medium max-w-md mx-auto uppercase tracking-widest text-[10px] leading-relaxed mb-12">
-          Chatvibe is a verified community of high-energy individuals. One-time activation unlocks the full VIP experience.
+        <p className="text-text-secondary text-sm md:text-base font-medium max-w-sm mx-auto leading-relaxed mb-10">
+          MingleKe is a verified community of high-energy individuals. One-time activation unlocks the full VIP experience.
         </p>
 
         <div className="grid grid-cols-2 gap-4 mb-12">
@@ -65,16 +65,16 @@ export function ActivationPage() {
            ))}
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <button 
             onClick={handlePaymentRedirect}
             disabled={isRedirecting}
-            className="w-full py-6 bg-white text-black font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary hover:text-white transition-all shadow-neon flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary w-full py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span>{isRedirecting ? 'REDIRECTING...' : 'JOIN THE ELITE (KES 100)'}</span>
-            <ArrowRight size={18} className="ml-3 group-hover:translate-x-2 transition-transform" />
+            {isRedirecting ? 'Redirecting...' : 'Join The Elite (KES 100)'}
+            {!isRedirecting && <ArrowRight size={18} className="ml-2" />}
           </button>
-          <p className="text-[9px] font-black uppercase tracking-widest text-white/20">Secure payment via LipaNa</p>
+          <p className="text-xs text-text-muted">Secure payment via LipaNa</p>
         </div>
       </motion.div>
     </div>

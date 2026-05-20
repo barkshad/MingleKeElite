@@ -56,17 +56,17 @@ export function MatchesPage() {
   }, [user]);
 
   return (
-    <div className="min-h-screen bg-black pb-24">
-      <header className="px-8 py-10">
-        <h1 className="font-display text-4xl font-black italic tracking-tighter">YOUR MATCHES</h1>
-        <p className="text-white/50 mt-2">Connect and start real conversations.</p>
+    <div className="min-h-screen bg-background pb-24">
+      <header className="px-6 py-8 md:py-10">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Your Matches</h1>
+        <p className="text-text-secondary text-sm">Connect and start real conversations.</p>
         
-        <div className="relative mt-8">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+        <div className="relative mt-6">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
           <input 
             type="text" 
             placeholder="Search matches..." 
-            className="w-full rounded-2xl border border-white/5 bg-white/5 py-4 pl-12 pr-4 text-white placeholder-white/20 outline-none focus:border-primary/30"
+            className="w-full rounded-xl border border-border bg-surface py-3.5 pl-11 pr-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
           />
         </div>
       </header>

@@ -37,7 +37,7 @@ export function OnboardingPage() {
       await updateDoc(doc(db, 'users', user.uid), {
         photos,
         onboardingCompleted: true,
-        bio: profile?.bio || "Exploring the elite vibes of Chatvibe.",
+        bio: profile?.bio || "Exploring the elite vibes of MingleKe.",
         county: profile?.county || "Nairobi",
         isActivated: true
       });
@@ -51,18 +51,18 @@ export function OnboardingPage() {
     <div className="relative min-h-screen bg-background text-white flex flex-col overflow-hidden">
       
       {/* Cinematic Header */}
-      <header className="relative z-50 px-8 py-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-tr from-primary to-secondary rounded-xl shadow-neon flex items-center justify-center">
-            <Sparkles size={20} />
+      <header className="relative z-50 px-6 py-6 flex items-center justify-between border-b border-border">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <Sparkles size={16} className="text-white" />
           </div>
-          <h1 className="font-display text-2xl font-black italic tracking-tighter uppercase transition-all">
-            MINGLEKE <span className="text-primary italic font-black">ONBOARDING</span>
+          <h1 className="text-xl font-bold tracking-tight">
+            MingleKe <span className="text-primary">Onboarding</span>
           </h1>
         </div>
-        <div className="flex items-center gap-2">
-           <div className={`h-1.5 w-12 rounded-full transition-all duration-500 ${step === 1 ? 'bg-primary shadow-neon' : 'bg-white/10'}`} />
-           <div className={`h-1.5 w-12 rounded-full transition-all duration-500 ${step === 2 ? 'bg-primary shadow-neon' : 'bg-white/10'}`} />
+        <div className="flex items-center gap-1.5">
+           <div className={`h-1.5 rounded-full transition-all duration-500 w-8 ${step === 1 ? 'bg-primary' : 'bg-surface-hover'}`} />
+           <div className={`h-1.5 rounded-full transition-all duration-500 w-8 ${step === 2 ? 'bg-primary' : 'bg-surface-hover'}`} />
         </div>
       </header>
 
@@ -76,12 +76,11 @@ export function OnboardingPage() {
               exit={{ opacity: 0, x: -50 }}
               className="w-full max-w-xl text-center"
             >
-              <h2 className="font-display text-5xl md:text-6xl font-black italic uppercase tracking-tighter leading-none mb-6">
-                SHOW YOUR <br />
-                <span className="text-gradient">REAL ENERGY</span>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+                Add profile photos
               </h2>
-              <p className="text-white/40 text-sm font-black uppercase tracking-[0.3em] mb-12 max-w-md mx-auto">
-                Elite status requires authenticity. <br/>Upload at least 2 real photos to continue.
+              <p className="text-text-secondary text-sm mb-10 max-w-md mx-auto">
+                Upload at least 2 photos to continue.
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
@@ -132,12 +131,12 @@ export function OnboardingPage() {
                         </>
                       ) : (
                         <>
-                          <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center transition-transform group-hover:scale-110">
-                            <Camera size={24} className="text-white/40" />
+                          <div className="w-12 h-12 rounded-2xl bg-surface-hover flex items-center justify-center transition-transform group-hover:scale-110">
+                            <Camera size={24} className="text-text-muted" />
                           </div>
                           <div className="text-center">
-                            <p className="text-xs font-black uppercase tracking-widest text-white/40">Add Photo</p>
-                            <p className="text-[8px] font-bold text-white/20 mt-1 uppercase">JPG, PNG, WEBP</p>
+                            <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider">Add Photo</p>
+                            <p className="text-[10px] font-medium text-text-muted mt-1">JPG, PNG</p>
                           </div>
                         </>
                       )}
@@ -154,18 +153,18 @@ export function OnboardingPage() {
                   onClick={() => photos.length >= 2 && setStep(2)}
                   disabled={photos.length < 2}
                   className={`
-                    w-full py-6 rounded-2xl font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center group
+                    w-full py-4 rounded-xl font-medium transition-colors flex items-center justify-center gap-2
                     ${photos.length >= 2 
-                      ? 'bg-white text-black hover:bg-primary hover:text-white shadow-neon' 
-                      : 'bg-white/5 text-white/20 border border-white/5 cursor-not-allowed'}
+                      ? 'btn-primary' 
+                      : 'bg-surface-hover text-text-muted cursor-not-allowed'}
                   `}
                 >
-                  <span>CONTINUE DISCOVERY</span>
-                  <ChevronRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <span>Continue</span>
+                  <ChevronRight size={18} />
                 </button>
-                <div className="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/20">
+                <div className="flex items-center justify-center gap-2 text-xs text-text-muted">
                    <ShieldCheck size={14} />
-                   <span>Cinematic Moderation Enabled</span>
+                   <span>Photos are verified</span>
                 </div>
               </div>
             </motion.div>
@@ -179,51 +178,50 @@ export function OnboardingPage() {
               exit={{ opacity: 0, x: -50 }}
               className="w-full max-w-xl"
             >
-              <div className="text-center mb-12">
-                <h2 className="font-display text-5xl md:text-6xl font-black italic uppercase tracking-tighter leading-none mb-6">
-                   FINAL <br />
-                   <span className="text-gradient">CALIBRATION</span>
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+                   Complete Profile
                 </h2>
-                <p className="text-white/40 text-sm font-black uppercase tracking-[0.3em] max-w-md mx-auto">
-                   Tell your story. Define your vibe.
+                <p className="text-text-secondary text-sm max-w-md mx-auto">
+                   Add a bio and your location.
                 </p>
               </div>
 
-              <GlassCard className="p-10 space-y-8 border-white/10 bg-white/[0.02]">
+              <div className="surface-card p-6 space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 ml-1">Elite Bio</label>
+                  <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider ml-1">Bio</label>
                   <textarea 
-                    placeholder="What's your frequency?"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-sm font-medium focus:ring-1 focus:ring-primary focus:border-primary/50 outline-none min-h-[120px] transition-all"
+                    placeholder="Tell us about yourself..."
+                    className="w-full bg-background border border-border rounded-xl p-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none min-h-[100px] transition-colors"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 ml-1">Location</label>
+                    <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider ml-1">Location</label>
                     <div className="relative">
-                      <select className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-sm font-black uppercase tracking-widest focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer">
+                      <select className="w-full bg-background border border-border rounded-xl p-3.5 text-sm focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer">
                         <option>Nairobi</option>
                         <option>Mombasa</option>
                         <option>Kisumu</option>
                         <option>Nakuru</option>
                       </select>
-                      <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
-                         <ChevronRight className="rotate-90" size={16} />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted">
+                         <ChevronRight size={16} />
                       </div>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 ml-1">Frequency</label>
+                    <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider ml-1">Looking for</label>
                     <div className="relative">
-                       <select className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-sm font-black uppercase tracking-widest focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer">
-                        <option>Social</option>
-                        <option>Relaxed</option>
-                        <option>Productive</option>
-                        <option>Deep</option>
+                       <select className="w-full bg-background border border-border rounded-xl p-3.5 text-sm focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer">
+                        <option>Dating</option>
+                        <option>Friendship</option>
+                        <option>Networking</option>
+                        <option>Not sure yet</option>
                       </select>
-                      <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
-                         <ChevronRight className="rotate-90" size={16} />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted">
+                         <ChevronRight size={16} />
                       </div>
                     </div>
                   </div>
@@ -231,12 +229,12 @@ export function OnboardingPage() {
 
                 <button 
                   onClick={handleComplete}
-                  className="w-full py-6 bg-white text-black font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary hover:text-white transition-all shadow-neon flex items-center justify-center group"
+                  className="btn-primary w-full py-4 text-base flex items-center justify-center gap-2 mt-4"
                 >
-                  <Sparkles size={18} className="mr-3" />
-                  <span>INITIALIZE DISCOVERY</span>
+                  <Sparkles size={18} />
+                  <span>Start Exploring</span>
                 </button>
-              </GlassCard>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
