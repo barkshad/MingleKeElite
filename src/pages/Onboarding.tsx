@@ -37,7 +37,7 @@ export function OnboardingPage() {
       await updateDoc(doc(db, 'users', user.uid), {
         photos,
         onboardingCompleted: true,
-        bio: profile?.bio || "Exploring the elite vibes of MingleKe.",
+        bio: profile?.bio || "Exploring the elite vibes of Chatvibe.",
         county: profile?.county || "Nairobi",
         isActivated: true
       });

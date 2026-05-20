@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PaymentModal } from '../components/activation/PaymentModal';
 import { ShieldCheck, Zap, Sparkles, Crown, ArrowRight, Star } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
-import { GlassCard } from '../components/ui/GlassCard';
 
 export function ActivationPage() {
   const { profile } = useAuth();
-  const [showModal, setShowModal] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   if (profile?.isActivated) {
     return <Navigate to="/discover" />;
   }
+
+  const handlePaymentRedirect = () => {
+    setIsRedirecting(true);
+    // Redirect to external payment provider
+    window.location.href = "https://lipana.dev/pay/mingleke";
+  };
 
   return (
     <div className="relative min-h-screen bg-background overflow-hidden flex flex-col justify-center items-center px-6">
@@ -36,7 +40,7 @@ export function ActivationPage() {
         </h1>
         
         <p className="text-white/40 text-lg md:text-xl font-medium max-w-md mx-auto uppercase tracking-widest text-[10px] leading-relaxed mb-12">
-          MingleKe is a verified community of high-energy individuals. One-time activation unlocks the full cinematic experience.
+          Chatvibe is a verified community of high-energy individuals. One-time activation unlocks the full VIP experience.
         </p>
 
         <div className="grid grid-cols-2 gap-4 mb-12">
@@ -63,17 +67,16 @@ export function ActivationPage() {
 
         <div className="space-y-6">
           <button 
-            onClick={() => setShowModal(true)}
-            className="w-full py-6 bg-white text-black font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary hover:text-white transition-all shadow-neon flex items-center justify-center group"
+            onClick={handlePaymentRedirect}
+            disabled={isRedirecting}
+            className="w-full py-6 bg-white text-black font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-primary hover:text-white transition-all shadow-neon flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span>JOIN THE ELITE (KES 100)</span>
+            <span>{isRedirecting ? 'REDIRECTING...' : 'JOIN THE ELITE (KES 100)'}</span>
             <ArrowRight size={18} className="ml-3 group-hover:translate-x-2 transition-transform" />
           </button>
-          <p className="text-[9px] font-black uppercase tracking-widest text-white/20">Secure cinematic payment via LipaNa.dev</p>
+          <p className="text-[9px] font-black uppercase tracking-widest text-white/20">Secure payment via LipaNa</p>
         </div>
       </motion.div>
-
-      {showModal && <PaymentModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

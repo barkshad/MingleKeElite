@@ -12,7 +12,7 @@ export function LandingPage() {
            <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
               <Sparkles size={12} className="text-white" />
            </div>
-           MingleKe
+           Chatvibe
         </div>
       </nav>
 
@@ -33,7 +33,7 @@ export function LandingPage() {
           transition={{ delay: 0.1 }}
           className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight"
         >
-          Connect with <span className="text-primary">intention.</span>
+          Meet Hot Singles. <span className="text-primary">Chat & Earn.</span>
         </motion.h1>
         
         <motion.p 
@@ -42,7 +42,7 @@ export function LandingPage() {
           transition={{ delay: 0.2 }}
           className="max-w-2xl text-lg text-text-secondary font-medium leading-relaxed mb-10"
         >
-          A premium space designed for meaningful curation, real conversations, and seamless discovery without the noise. 
+          Discover connections, make meaningful matches, and get rewarded for your interactions. The ultimate social multiplier. 
         </motion.p>
 
         <motion.div 
@@ -53,7 +53,7 @@ export function LandingPage() {
         >
           <Link to="/auth" className="w-full sm:w-auto text-center block">
             <button className="btn-primary w-full sm:w-auto px-8 py-4 text-base">
-              Join MingleKe
+              Join Chatvibe
               <ArrowRight size={18} />
             </button>
           </Link>
