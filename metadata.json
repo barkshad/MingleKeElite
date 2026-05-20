@@ -1,0 +1,6 @@
+{
+  "name": "MingleKe Elite",
+  "description": "Premium Kenyan social discovery and real-time interaction platform for Gen-Z and millennials.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

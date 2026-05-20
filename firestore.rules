@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Denial
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    function isActivated() { return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActivated == true; }
+    function isValidId(id) { return id is string && id.size() <= 128; }
+    
+    // User Profiles
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(userId) 
+        && request.resource.data.isActivated == false 
+        && request.resource.data.isVerified == false;
+      allow update: if isOwner(userId) 
+        && (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName', 'bio', 'photoURL', 'age', 'county', 'occupation', 'education', 'interests', 'lastSeen', 'onlineStatus'])
+            || (resource.data.isActivated == false && request.resource.data.isActivated == true)); // Payment override
+    }
+
+    // Likes
+    match /likes/{likeId} {
+      allow read: if isSignedIn() && (resource.data.fromId == request.auth.uid || resource.data.toId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.fromId == request.auth.uid;
+    }
+
+    // Matches
+    match /matches/{matchId} {
+      allow read: if isSignedIn() && request.auth.uid in resource.data.users;
+      allow create: if isSignedIn() && request.auth.uid in request.resource.data.users;
+      
+      match /messages/{messageId} {
+        allow read: if isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/matches/$(matchId)).data.users;
+        allow create: if isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/matches/$(matchId)).data.users
+          && request.resource.data.senderId == request.auth.uid;
+      }
+    }
+
+    // Referrals
+    match /referrals/{referralId} {
+      allow read: if isSignedIn() && (resource.data.referrerId == request.auth.uid || resource.data.referredUserId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.referredUserId == request.auth.uid;
+    }
+  }
+}

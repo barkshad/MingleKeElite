@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and account information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "age": { "type": "integer" },
+        "county": { "type": "string" },
+        "bio": { "type": "string" },
+        "occupation": { "type": "string" },
+        "education": { "type": "string" },
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "isActivated": { "type": "boolean" },
+        "isVerified": { "type": "boolean" },
+        "coins": { "type": "integer" },
+        "referralCode": { "type": "string" },
+        "referredBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastSeen": { "type": "string", "format": "date-time" },
+        "onlineStatus": { "type": "string", "enum": ["online", "offline", "away"] }
+      },
+      "required": ["uid", "email", "isActivated"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "A successful pairing between two users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "users": { "type": "array", "items": { "type": "string" } },
+        "lastMessage": { "type": "string" },
+        "lastMessageAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "users", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A chat message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "type": { "type": "string", "enum": ["text", "image", "voice"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["id", "senderId", "text", "createdAt"]
+    },
+    "Like": {
+      "title": "Like",
+      "description": "An expression of interest from one user to another",
+      "type": "object",
+      "properties": {
+        "fromId": { "type": "string" },
+        "toId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fromId", "toId", "createdAt"]
+    },
+    "Referral": {
+      "title": "Referral",
+      "description": "Tracking user invites",
+      "type": "object",
+      "properties": {
+        "referrerId": { "type": "string" },
+        "referredUserId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["referrerId", "referredUserId", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Public and private user profile data"
+    },
+    "matches/{matchId}": {
+      "schema": "Match",
+      "description": "Active matches between users"
+    },
+    "matches/{matchId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages within a match"
+    },
+    "likes/{likeId}": {
+      "schema": "Like",
+      "description": "Individual likes to determine matches"
+    },
+    "referrals/{referralId}": {
+      "schema": "Referral",
+      "description": "Referral tracking collection"
+    }
+  }
+}
