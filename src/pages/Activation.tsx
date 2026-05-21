@@ -10,14 +10,39 @@ export function ActivationPage() {
   const { user, profile } = useAuth();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
+  const [hasOpenedPayment, setHasOpenedPayment] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+
   if (profile?.isActivated) {
     return <Navigate to="/discover" />;
   }
 
   const handlePaymentRedirect = () => {
     setIsRedirecting(true);
-    // Redirect to external payment provider
-    window.location.href = "https://lipana.dev/pay/mingleke";
+    // Open payment link in a new tab
+    window.open("https://lipana.dev/pay/mingleke", "_blank");
+    setTimeout(() => {
+       setIsRedirecting(false);
+       setHasOpenedPayment(true);
+    }, 1500);
+  };
+
+  const handleVerifyPayment = async () => {
+    if (!user) return;
+    setIsVerifying(true);
+    // Simulate verification delay and redirect
+    setTimeout(async () => {
+        try {
+            await updateDoc(doc(db, 'users', user.uid), {
+               isActivated: true
+            });
+            // Redirect to App Store download
+            window.location.href = "https://play.google.com/store/search?q=pendova+dating+app&c=apps";
+        } catch (error) {
+            console.error("Verification failed", error);
+            setIsVerifying(false);
+        }
+    }, 3000);
   };
 
   return (
@@ -64,14 +89,25 @@ export function ActivationPage() {
         </div>
 
         <div className="space-y-4 max-w-sm mx-auto">
-          <button 
-            onClick={handlePaymentRedirect}
-            disabled={isRedirecting}
-            className="btn-primary w-full py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isRedirecting ? 'Redirecting...' : 'Join The Elite (KES 100)'}
-            {!isRedirecting && <ArrowRight size={18} className="ml-2" />}
-          </button>
+          {!hasOpenedPayment ? (
+            <button 
+              onClick={handlePaymentRedirect}
+              disabled={isRedirecting}
+              className="btn-primary w-full py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isRedirecting ? 'Redirecting...' : 'Join The Elite (KES 100)'}
+              {!isRedirecting && <ArrowRight size={18} className="ml-2" />}
+            </button>
+          ) : (
+            <button 
+              onClick={handleVerifyPayment}
+              disabled={isVerifying}
+              className="btn-primary w-full py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed bg-white text-black hover:bg-gray-200"
+            >
+              {isVerifying ? 'Verifying...' : 'I have completed payment'}
+              {!isVerifying && <CheckCircle size={18} className="ml-2" />}
+            </button>
+          )}
           <p className="text-xs text-text-muted mt-4">Secure payment via LipaNa</p>
         </div>
       </motion.div>

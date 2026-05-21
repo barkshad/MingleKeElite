@@ -1,8 +1,25 @@
 import { Sparkles, ArrowRight, ShieldCheck, Zap, Heart, MessageCircle, Crown, Users, CheckCircle, Image, Star, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export function LandingPage() {
+  const { user, profile } = useAuth();
+  
+  const getCtaLink = () => {
+    if (!user) return "/auth";
+    if (!profile?.isActivated) return "/activation";
+    if (!profile?.onboardingCompleted) return "/onboarding";
+    return "/discover";
+  };
+
+  const getCtaText = () => {
+    if (!user) return "Activate & Join Now";
+    if (!profile?.isActivated) return "Complete Activation";
+    if (!profile?.onboardingCompleted) return "Complete Profile";
+    return "Open App";
+  };
+
   const staggerContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -65,9 +82,9 @@ export function LandingPage() {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Link to="/auth" className="w-full sm:w-auto">
+            <Link to={getCtaLink()} className="w-full sm:w-auto">
               <button className="btn-primary w-full sm:w-auto px-8 py-4 text-base">
-                Activate & Join Now
+                {getCtaText()}
                 <ArrowRight size={18} className="ml-2" />
               </button>
             </Link>
@@ -337,9 +354,9 @@ export function LandingPage() {
           <p className="text-xl text-text-secondary mb-12">
             Meet people. Match instantly. Earn rewards. Build real connections.
           </p>
-          <Link to="/auth">
+          <Link to={getCtaLink()}>
             <button className="btn-primary px-10 py-5 text-lg font-bold">
-              👉 Activate MingleKe Now
+              👉 {getCtaText()}
             </button>
           </Link>
         </div>

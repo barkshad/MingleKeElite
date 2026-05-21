@@ -29,7 +29,7 @@ function AppRoutes() {
     <div className="relative min-h-screen">
       <AnimatePresence mode="wait">
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/discover" /> : <LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={user ? <Navigate to="/discover" /> : <AuthPage />} />
           
           {/* Core App Routes (Protected) */}
