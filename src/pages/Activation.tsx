@@ -12,10 +12,11 @@ export function ActivationPage() {
 
   const [hasOpenedPayment, setHasOpenedPayment] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const [transactionCode, setTransactionCode] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  if (profile?.isActivated) {
+  if (profile?.isActivated && !isVerified) {
     return <Navigate to="/discover" />;
   }
 
@@ -56,8 +57,8 @@ export function ActivationPage() {
             await updateDoc(doc(db, 'users', user.uid), {
                isActivated: true
             });
-            // Redirect to App Store download
-            window.location.href = "https://play.google.com/store/search?q=pendova+dating+app&c=apps";
+            setIsVerified(true);
+            setIsVerifying(false);
         } catch (error) {
             console.error("Verification failed", error);
             setErrorText('Verification failed. Please try again.');
@@ -110,7 +111,31 @@ export function ActivationPage() {
         </div>
 
         <div className="space-y-4 max-w-sm mx-auto">
-          {!hasOpenedPayment ? (
+          {isVerified ? (
+            <div className="space-y-6 text-center">
+              <div className="mx-auto w-16 h-16 bg-green-500/20 border border-green-500/50 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle size={32} className="text-green-500" />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Payment Verified!</h2>
+              <p className="text-text-secondary text-sm">
+                Your account is now fully activated. Download the app to start matching.
+              </p>
+              <a 
+                href="https://play.google.com/store/search?q=pendova+dating+app&c=apps" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn-primary w-full py-4 text-base bg-white text-black hover:bg-gray-200 flex items-center justify-center gap-2"
+              >
+                Download App
+                <ArrowRight size={18} />
+              </a>
+              <div className="pt-4">
+                <p className="text-xs text-text-muted mt-4">
+                  Already downloaded? <a href="/discover" className="text-primary hover:underline">Open Web App</a>
+                </p>
+              </div>
+            </div>
+          ) : !hasOpenedPayment ? (
             <button 
               onClick={handlePaymentRedirect}
               disabled={isRedirecting}
@@ -145,7 +170,7 @@ export function ActivationPage() {
               </button>
             </div>
           )}
-          <p className="text-xs text-text-muted mt-4">Secure payment via LipaNa</p>
+          {!isVerified && <p className="text-xs text-text-muted mt-4">Secure payment via LipaNa</p>}
         </div>
       </motion.div>
     </div>
