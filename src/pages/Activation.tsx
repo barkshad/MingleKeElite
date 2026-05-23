@@ -12,6 +12,8 @@ export function ActivationPage() {
 
   const [hasOpenedPayment, setHasOpenedPayment] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [transactionCode, setTransactionCode] = useState('');
+  const [errorText, setErrorText] = useState('');
 
   if (profile?.isActivated) {
     return <Navigate to="/discover" />;
@@ -27,8 +29,26 @@ export function ActivationPage() {
     }, 1500);
   };
 
+  const validateTransactionCodeFormat = (code: string) => {
+    // Exactly 10 characters: 1 letter + 9 alphanumeric
+    const regex = /^[A-Z][A-Z0-9]{9}$/;
+    return regex.test(code);
+  };
+
   const handleVerifyPayment = async () => {
     if (!user) return;
+    setErrorText('');
+    
+    if (!transactionCode) {
+      setErrorText('Please enter your M-Pesa transaction code.');
+      return;
+    }
+
+    if (!validateTransactionCodeFormat(transactionCode.toUpperCase())) {
+      setErrorText('Invalid format. Code must be 10 characters starting with a letter.');
+      return;
+    }
+
     setIsVerifying(true);
     // Simulate verification delay and redirect
     setTimeout(async () => {
@@ -40,9 +60,10 @@ export function ActivationPage() {
             window.location.href = "https://play.google.com/store/search?q=pendova+dating+app&c=apps";
         } catch (error) {
             console.error("Verification failed", error);
+            setErrorText('Verification failed. Please try again.');
             setIsVerifying(false);
         }
-    }, 3000);
+    }, 2000);
   };
 
   return (
@@ -99,14 +120,30 @@ export function ActivationPage() {
               {!isRedirecting && <ArrowRight size={18} className="ml-2" />}
             </button>
           ) : (
-            <button 
-              onClick={handleVerifyPayment}
-              disabled={isVerifying}
-              className="btn-primary w-full py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed bg-white text-black hover:bg-gray-200"
-            >
-              {isVerifying ? 'Verifying...' : 'I have completed payment'}
-              {!isVerifying && <CheckCircle size={18} className="ml-2" />}
-            </button>
+            <div className="space-y-4">
+              <input 
+                type="text"
+                placeholder="Enter M-Pesa Code (e.g. PK9H8J7G6F)"
+                value={transactionCode}
+                onChange={(e) => {
+                  setTransactionCode(e.target.value.toUpperCase());
+                  setErrorText('');
+                }}
+                className="w-full bg-surface border border-border px-4 py-3 rounded-lg text-white focus:outline-none focus:border-primary transition-colors text-center font-bold tracking-wider uppercase"
+                maxLength={10}
+              />
+              {errorText && (
+                <p className="text-red-400 text-xs font-medium text-center">{errorText}</p>
+              )}
+              <button 
+                onClick={handleVerifyPayment}
+                disabled={isVerifying || !transactionCode}
+                className="btn-primary w-full py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed bg-white text-black hover:bg-gray-200"
+              >
+                {isVerifying ? 'Verifying Code...' : 'Verify Transaction'}
+                {!isVerifying && <CheckCircle size={18} className="ml-2" />}
+              </button>
+            </div>
           )}
           <p className="text-xs text-text-muted mt-4">Secure payment via LipaNa</p>
         </div>
