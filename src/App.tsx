@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LandingPage } from './pages/Landing';
 import { AuthPage } from './pages/Auth';
@@ -16,14 +17,27 @@ import { OnboardingPage } from './pages/Onboarding';
 
 function AppRoutes() {
   const { user, profile, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const hasRedirected = useRef(false);
 
-    if (loading) {
-      return (
-        <div className="flex min-h-screen items-center justify-center bg-background">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-        </div>
-      );
+  useEffect(() => {
+    // ALWAYS SHOW THE LANDING PAGE FIRST ON EVERY REFRESH
+    if (!loading && !hasRedirected.current) {
+      if (location.pathname !== '/') {
+        navigate('/', { replace: true });
+      }
+      hasRedirected.current = true;
     }
+  }, [loading, navigate, location.pathname]);
+
+  if (loading || !hasRedirected.current) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen">
